@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Predict Boston house prices using machine learning models. Enter property details to get an instant prediction.">
   <meta name="keywords" content="Boston House Price Prediction, Machine Learning, Flask App, Real Estate">
-  <meta name="author" content="Adisa Isaac">
+  <meta name="author" content="Your Name">
   <title>Boston House Price Prediction</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -28,8 +28,40 @@
       padding: 20px 0;
     }
 
+    .marquee-container {
+      background-color: rgba(255, 255, 255, 0.8);
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+
+    .marquee-content {
+      padding-left: 100%;
+      display: inline-block;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(-100%, 0);
+      }
+    }
+
+    .marquee:hover {
+      animation-play-state: paused;
+    }
+
     .title {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 500;
       color: #333;
       margin-bottom: 20px;
@@ -37,7 +69,7 @@
 
     .form-container {
       background: #fff;
-      padding: 15px 20px;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       text-align: center;
@@ -47,13 +79,13 @@
       font-family: 'Pacifico', cursive;
       color: #333;
       margin-bottom: 15px;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
     }
 
     .form-container form {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .input-group {
@@ -62,12 +94,20 @@
 
     .input-group input {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 0.9rem;
       transition: border 0.3s ease;
       box-sizing: border-box;
+    }
+
+    .input-description {
+      font-size: 0.75rem;
+      color: #555;
+      text-align: left;
+      margin-top: 2px;
+      padding-left: 2px;
     }
 
     .input-range {
@@ -83,7 +123,7 @@
     }
 
     .form-container button {
-      padding: 10px;
+      padding: 12px;
       background: #1e90ff;
       color: #fff;
       border: none;
@@ -91,7 +131,8 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s ease;
-      margin-top: 10px;
+      margin-top: 15px;
+      font-weight: bold;
     }
 
     .form-container button:hover {
@@ -102,7 +143,7 @@
       font-family: Verdana, sans-serif;
       font-size: 0.85rem;
       color: #444;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .form-container .prediction {
@@ -110,59 +151,9 @@
       font-size: 1.5rem;
       color: #333;
       font-weight: bold;
-    }
-
-    .image-container {
-      margin-bottom: 20px;
-    }
-
-    /* CSS-based image replacement */
-    .house-image {
-      width: 300px;
-      height: 150px;
-      margin: 0 auto;
-      background: #104e8b;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .house-image:before {
-      content: "";
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 80px;
-      background: #fff;
+      padding: 10px;
+      background-color: #f8f9fa;
       border-radius: 5px;
-    }
-
-    .house-image:after {
-      content: "";
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-bottom: 40px solid #ff6347;
-    }
-
-    .house-text {
-      position: relative;
-      margin-top: 100px;
-      font-weight: bold;
-      font-size: 16px;
-      z-index: 2;
     }
 
     footer {
@@ -176,80 +167,95 @@
 
 <body>
   <div class="container">
-    <div class="title">Predict Boston house prices using machine learning models</div>
-    
-    <!-- CSS-based house image replacement -->
-    <div class="image-container">
-      <div class="house-image">
-        <span class="house-text">House Price Prediction</span>
+    <!-- Modern CSS Marquee at the top -->
+    <div class="marquee-container">
+      <div class="marquee">
+        <div class="marquee-content">
+          Predict Boston House Prices | Machine Learning Powered Prediction | Accurate Real Estate Valuation | Advanced Price Estimation
+        </div>
       </div>
     </div>
+
+    <div class="title">Predict Boston House Prices Using Machine Learning</div>
     
     <div class="form-container">
       <h1>Boston House Price Prediction</h1>
       <form action="{{ url_for('predict') }}" method="post">
         <div class="input-group">
           <input type="number" name="CRIM" placeholder="Crime Rate (CRIM)" required step="0.01" min="0.01" max="88.98" />
+          <div class="input-description">Per capita crime rate by town</div>
           <div class="input-range">Range: 0.01 - 88.98</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="ZN" placeholder="Residential Land Zone (ZN)" required step="0.1" min="0" max="100" />
+          <div class="input-description">Proportion of residential land zoned for lots over 25,000 sq.ft.</div>
           <div class="input-range">Range: 0 - 100</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="INDUS" placeholder="Industrial Zone (INDUS)" required step="0.01" min="0.46" max="27.74" />
+          <div class="input-description">Proportion of non-retail business acres per town</div>
           <div class="input-range">Range: 0.46 - 27.74</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="CHAS" placeholder="Charles River Proximity (CHAS)" required step="1" min="0" max="1" />
-          <div class="input-range">Range: 0 (No) or 1 (Yes)</div>
+          <div class="input-description">Charles River dummy variable (= 1 if tract bounds river; 0 otherwise)</div>
+          <div class="input-range">Enter 0 or 1 only</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="NOX" placeholder="Nitric Oxide Concentration (NOX)" required step="0.001" min="0.385" max="0.871" />
+          <div class="input-description">Nitric oxides concentration (parts per 10 million)</div>
           <div class="input-range">Range: 0.385 - 0.871</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="RM" placeholder="Number of Rooms (RM)" required step="0.01" min="3.56" max="8.78" />
+          <div class="input-description">Average number of rooms per dwelling</div>
           <div class="input-range">Range: 3.56 - 8.78</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="Age" placeholder="Age of Property" required step="0.1" min="2.9" max="100" />
+          <div class="input-description">Proportion of owner-occupied units built prior to 1940</div>
           <div class="input-range">Range: 2.9 - 100</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="DIS" placeholder="Distance to Employment Centers (DIS)" required step="0.01" min="1.13" max="12.13" />
+          <div class="input-description">Weighted distances to five Boston employment centers</div>
           <div class="input-range">Range: 1.13 - 12.13</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="RAD" placeholder="Accessibility to Highways (RAD)" required step="1" min="1" max="24" />
+          <div class="input-description">Index of accessibility to radial highways</div>
           <div class="input-range">Range: 1 - 24</div>
         </div>
 
         <div class="input-group">
-          <input type="number" name="TAX" placeholder="Tax Rate (TAX)" required step="1" min="187" max="711" />
+          <input type="number" name="TAX" placeholder="Property Tax Rate (TAX)" required step="1" min="187" max="711" />
+          <div class="input-description">Full-value property-tax rate per $10,000</div>
           <div class="input-range">Range: 187 - 711</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="PTRATIO" placeholder="Pupil-Teacher Ratio (PTRATIO)" required step="0.1" min="12.6" max="22" />
+          <div class="input-description">Pupil-teacher ratio by town</div>
           <div class="input-range">Range: 12.6 - 22</div>
         </div>
 
         <div class="input-group">
           <input type="number" name="B" placeholder="Proportion of Black Population (B)" required step="0.1" min="0.32" max="396.9" />
+          <div class="input-description">1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</div>
           <div class="input-range">Range: 0.32 - 396.9</div>
         </div>
 
         <div class="input-group">
-          <input type="number" name="LSTAT" placeholder="Lower Status Population (LSTAT)" required step="0.01" min="1.73" max="37.97" />
+          <input type="number" name="LSTAT" placeholder="Percentage of Lower Status Population (LSTAT)" required step="0.01" min="1.73" max="37.97" />
+          <div class="input-description">% lower status of the population</div>
           <div class="input-range">Range: 1.73 - 37.97</div>
         </div>
 
