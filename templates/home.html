@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Predict Boston house prices using machine learning models. Enter property details to get an instant prediction.">
   <meta name="keywords" content="Boston House Price Prediction, Machine Learning, Flask App, Real Estate">
-  <meta name="author" content="Your Name">
+  <meta name="author" content="Adisa Isaac">
   <title>Boston House Price Prediction</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -116,10 +116,53 @@
       margin-bottom: 20px;
     }
 
-    .image-container img {
-      width: 100%;
-      max-width: 300px;
+    /* CSS-based image replacement */
+    .house-image {
+      width: 300px;
+      height: 150px;
+      margin: 0 auto;
+      background: #104e8b;
       border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .house-image:before {
+      content: "";
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 80px;
+      background: #fff;
+      border-radius: 5px;
+    }
+
+    .house-image:after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 40px solid #ff6347;
+    }
+
+    .house-text {
+      position: relative;
+      margin-top: 100px;
+      font-weight: bold;
+      font-size: 16px;
+      z-index: 2;
     }
 
     footer {
@@ -134,9 +177,14 @@
 <body>
   <div class="container">
     <div class="title">Predict Boston house prices using machine learning models</div>
+    
+    <!-- CSS-based house image replacement -->
     <div class="image-container">
-      <img src="https://via.placeholder.com/300x150?text=House+Price+Prediction" alt="House Price Prediction">
+      <div class="house-image">
+        <span class="house-text">House Price Prediction</span>
+      </div>
     </div>
+    
     <div class="form-container">
       <h1>Boston House Price Prediction</h1>
       <form action="{{ url_for('predict') }}" method="post">
