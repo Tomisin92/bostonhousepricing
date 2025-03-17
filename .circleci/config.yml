@@ -11,13 +11,17 @@ jobs:
       - setup_remote_docker
       - heroku/install
       - run:
-          name: Set Heroku stack to container
+          name: Login to Heroku Container Registry
           command: |
-            heroku stack:set container -a $HEROKU_APP_NAME
+            heroku container:login
       - run:
-          name: Deploy to Heroku
+          name: Build and push Docker image
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+            heroku container:push web -a $HEROKU_APP_NAME
+      - run:
+          name: Release the image
+          command: |
+            heroku container:release web -a $HEROKU_APP_NAME
 
 workflows:
   deploy:
