@@ -8,8 +8,7 @@ jobs:
       - image: cimg/python:3.12
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.14
+      - setup_remote_docker
       - heroku/install
       - run:
           name: Build and push Docker image to Heroku
