@@ -1,0 +1,27 @@
+version: 2.1
+orbs:
+  heroku: circleci/heroku@1.2
+
+jobs:
+  build-and-deploy:
+    docker:
+      - image: cimg/python:3.12
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+      - heroku/install
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            heroku container:login
+            heroku container:push web -a $HEROKU_APP_NAME
+            heroku container:release web -a $HEROKU_APP_NAME
+
+workflows:
+  deploy:
+    jobs:
+      - build-and-deploy:
+          filters:
+            branches:
+              only: main
