@@ -18,13 +18,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
     }
 
     .container {
       width: 90%;
       max-width: 600px;
+      padding: 20px 0;
     }
 
     .title {
@@ -55,12 +56,25 @@
       gap: 10px;
     }
 
-    .form-container input {
+    .input-group {
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
       padding: 8px;
       border: 1px solid #ccc;
       border-radius: 5px;
       font-size: 0.9rem;
       transition: border 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .input-range {
+      font-size: 0.75rem;
+      color: #666;
+      text-align: right;
+      margin-top: 2px;
     }
 
     .form-container input:focus {
@@ -69,14 +83,15 @@
     }
 
     .form-container button {
-      padding: 8px;
+      padding: 10px;
       background: #1e90ff;
       color: #fff;
       border: none;
       border-radius: 5px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s ease;
+      margin-top: 10px;
     }
 
     .form-container button:hover {
@@ -92,7 +107,7 @@
 
     .form-container .prediction {
       margin-top: 20px;
-      font-size: 1.5rem; /* Increased font size for the prediction */
+      font-size: 1.5rem;
       color: #333;
       font-weight: bold;
     }
@@ -111,7 +126,7 @@
       margin-top: 15px;
       text-align: center;
       font-size: 0.8rem;
-      color: #444;
+      color: #fff;
     }
   </style>
 </head>
@@ -125,22 +140,74 @@
     <div class="form-container">
       <h1>Boston House Price Prediction</h1>
       <form action="{{ url_for('predict') }}" method="post">
-        <input type="text" name="CRIM" placeholder="Crime Rate (CRIM)" required />
-        <input type="text" name="ZN" placeholder="Residential Land Zone (ZN)" required />
-        <input type="text" name="INDUS" placeholder="Industrial Zone (INDUS)" required />
-        <input type="text" name="CHAS" placeholder="Charles River Proximity (CHAS)" required />
-        <input type="text" name="NOX" placeholder="Nitric Oxide Concentration (NOX)" required />
-        <input type="text" name="RM" placeholder="Number of Rooms (RM)" required />
-        <input type="text" name="Age" placeholder="Age of Property" required />
-        <input type="text" name="DIS" placeholder="Distance to Employment Centers (DIS)" required />
-        <input type="text" name="RAD" placeholder="Accessibility to Highways (RAD)" required />
-        <input type="text" name="TAX" placeholder="Tax Rate (TAX)" required />
-        <input type="text" name="PTRATIO" placeholder="Pupil-Teacher Ratio (PTRATIO)" required />
-        <input type="text" name="B" placeholder="Proportion of Black Population (B)" required />
-        <input type="text" name="LSTAT" placeholder="Lower Status Population (LSTAT)" required />
-        <button type="submit">Predict</button>
+        <div class="input-group">
+          <input type="number" name="CRIM" placeholder="Crime Rate (CRIM)" required step="0.01" min="0.01" max="88.98" />
+          <div class="input-range">Range: 0.01 - 88.98</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="ZN" placeholder="Residential Land Zone (ZN)" required step="0.1" min="0" max="100" />
+          <div class="input-range">Range: 0 - 100</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="INDUS" placeholder="Industrial Zone (INDUS)" required step="0.01" min="0.46" max="27.74" />
+          <div class="input-range">Range: 0.46 - 27.74</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="CHAS" placeholder="Charles River Proximity (CHAS)" required step="1" min="0" max="1" />
+          <div class="input-range">Range: 0 (No) or 1 (Yes)</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="NOX" placeholder="Nitric Oxide Concentration (NOX)" required step="0.001" min="0.385" max="0.871" />
+          <div class="input-range">Range: 0.385 - 0.871</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="RM" placeholder="Number of Rooms (RM)" required step="0.01" min="3.56" max="8.78" />
+          <div class="input-range">Range: 3.56 - 8.78</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="Age" placeholder="Age of Property" required step="0.1" min="2.9" max="100" />
+          <div class="input-range">Range: 2.9 - 100</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="DIS" placeholder="Distance to Employment Centers (DIS)" required step="0.01" min="1.13" max="12.13" />
+          <div class="input-range">Range: 1.13 - 12.13</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="RAD" placeholder="Accessibility to Highways (RAD)" required step="1" min="1" max="24" />
+          <div class="input-range">Range: 1 - 24</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="TAX" placeholder="Tax Rate (TAX)" required step="1" min="187" max="711" />
+          <div class="input-range">Range: 187 - 711</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="PTRATIO" placeholder="Pupil-Teacher Ratio (PTRATIO)" required step="0.1" min="12.6" max="22" />
+          <div class="input-range">Range: 12.6 - 22</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="B" placeholder="Proportion of Black Population (B)" required step="0.1" min="0.32" max="396.9" />
+          <div class="input-range">Range: 0.32 - 396.9</div>
+        </div>
+
+        <div class="input-group">
+          <input type="number" name="LSTAT" placeholder="Lower Status Population (LSTAT)" required step="0.01" min="1.73" max="37.97" />
+          <div class="input-range">Range: 1.73 - 37.97</div>
+        </div>
+
+        <button type="submit">Predict House Price</button>
       </form>
-      <p class="note-info">All Prices Predicted are in $1000.</p>
+      <p class="note-info">All Prices Predicted are in $1000s (e.g., 20 = $20,000)</p>
       <div class="prediction">{{ prediction_text }}</div>
     </div>
     <footer>
@@ -150,4 +217,3 @@
 </body>
 
 </html>
-
